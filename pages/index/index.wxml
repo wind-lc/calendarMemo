@@ -1,0 +1,33 @@
+<view class="container">
+  <view class="calendar-wrap">
+    <view class="calendar-title">
+      <text bindtap="changeMonth" data-direction="prev">←</text>
+      <view class="">
+        <text>{{currentYear}}年</text>
+        <text>{{currentMonth}}月</text>
+      </view>
+      <text bindtap="changeMonth" data-direction="next">→</text>
+      <button class="to-month btn" bindtap="handleToMonth">返回本月</button>
+    </view>
+    <view class="calendar-content">
+      <view class="calendar-week">
+        <text wx:for="{{daysOfWeek}}" wx:key="index">{{item}}</text>
+      </view>
+      <view class="calendar-date">
+        <view
+          wx:for="{{dates}}"
+          wx:key="index"
+          class="{{[item.isCurrentMonth ? '' : 'not-current-month',item.isToday ? 'today' : '', item.activeDate ? 'active-date' : '', item.isMenstruation ? 'menstruation' : '']}}"
+          data-index="{{index}}"
+          bindtap="handleActiveDate"
+        >
+          <text>{{item.date}}</text>
+        </view>
+      </view>
+      <view class="calendar-operate">
+        <text>记录经期</text>
+        <button class="btn">开始经期</button>
+      </view>
+    </view>
+  </view>
+</view>

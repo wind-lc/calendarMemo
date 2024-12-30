@@ -1,0 +1,25 @@
+page {
+  --color0: #fff;
+  --color1: #424242;
+  --color2: #2E2E2E;
+  --color3: #787878;
+  --color4: #FF518C;
+  height: 100%;
+  width: 100%;
+  font-size: 28rpx;
+  letter-spacing: 4rpx;
+}
+view, text {
+  box-sizing: border-box;
+}
+.btn{
+  padding: 0 20rpx!important;
+  margin: 0 !important;
+  width: auto !important;
+  height: 50rpx;
+  font-size: 24rpx;
+  font-weight: normal;
+  line-height: 50rpx;
+  background-color: var(--color2);
+  color: var(--color0);
+}

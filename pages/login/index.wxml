@@ -1,0 +1,15 @@
+<view class="login-wrap">
+  <view class="login-title">
+    <button class="theme-btn btn">night</button>
+  </view>
+  <view class="login-content">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    </button>
+    <view class="nickname-wrapper">
+      <text class="nickname-label">昵称</text>
+      <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
+    </view>
+    <button class="login-btn" bindtap="handleLogin">确认</button>
+  </view>
+</view>

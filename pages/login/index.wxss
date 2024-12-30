@@ -1,0 +1,65 @@
+.login-wrap{
+  height: 100%;
+  border-top: 2rpx solid var(--color2);
+}
+.login-title{
+  height: 80rpx;
+  background-color: var(--color1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--color0);
+}
+.theme-btn{
+  position: absolute;
+  top: 50%;
+  right: 20rpx;
+  transform: translateY(-50%)
+}
+.login-content{
+  height: calc(100% - 80rpx);
+  background-color: var(--color1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20vh;
+}
+.avatar-wrapper {
+  padding: 0;
+  width: 112rpx !important;
+  border-radius: 16rpx;
+  margin-top: 80rpx;
+  margin-bottom: 80rpx;
+}
+.avatar {
+  display: block;
+  width: 112rpx;
+  height: 112rpx;
+}
+.nickname-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 32rpx;
+  border-top: 2rpx solid var(--color3);
+  border-bottom: 2rpx solid var(--color3);
+  color: var(--color0);
+  justify-content: center;
+}
+
+.nickname-label {
+  width: 210rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+}
+.nickname-input {
+  flex: 1;
+  height: 64rpx;
+  line-height: 64rpx;
+}
+.login-btn{
+  margin-top: 32rpx;
+  font-weight: normal;
+  background-color: var(--color2);
+  color: var(--color0);
+}

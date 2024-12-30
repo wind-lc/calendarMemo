@@ -1,0 +1,156 @@
+.container{
+  height: 100%;
+  border-top: 2rpx solid var(--color2);
+}
+.calendar-wrap{
+  height: 100%;
+}
+.calendar-title{
+  height: 80rpx;
+  background-color: var(--color1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20rpx;
+  color: var(--color0);
+  position: relative;
+}
+.to-month{
+  position: absolute;
+  top: 50%;
+  right: 20rpx;
+  transform: translateY(-50%)
+}
+.calendar-content{
+  height: calc(100% - 80rpx);
+  background-color: var(--color2);
+  color: var(--color0);
+}
+.calendar-week{
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 10rpx;
+}
+.calendar-week text{
+  width: calc(100% / 7);
+  text-align: center;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.calendar-date{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10rpx;
+  padding: 10rpx;
+}
+.calendar-date view{
+  height: 80rpx;
+  position: relative;
+}
+.calendar-date view text{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  width: calc(100% - 8rpx);
+  height: calc(100% - 8rpx);
+}
+.not-current-month{
+  color: var(--color3);
+}
+.today{
+  border: 2rpx solid var(--color0);
+}
+.active-date{
+  border: 2rpx solid var(--color0);
+  position: relative;
+}
+.active-date text{
+  border: 2rpx solid var(--color0);
+}
+.menstruation text{
+  background-color: var(--color4);
+}
+.estimate text{
+  background-color: var(--color4);
+  background-image: -webkit-gradient(linear, 0 0, 100% 100%, 
+    color-stop(12.5%, rgba(255, 255, 255, .2)), 
+    color-stop(12.5%, transparent), 
+    color-stop(25%, transparent), 
+    color-stop(25%, rgba(255, 255, 255, .2)), 
+    color-stop(37.5%, rgba(255, 255, 255, .2)), 
+    color-stop(37.5%, transparent), 
+    color-stop(50%, transparent), 
+    color-stop(50%, rgba(255, 255, 255, .2)), 
+    color-stop(62.5%, rgba(255, 255, 255, .2)), 
+    color-stop(62.5%, transparent), 
+    color-stop(75%, transparent), 
+    color-stop(75%, rgba(255, 255, 255, .2)), 
+    color-stop(87.5%, rgba(255, 255, 255, .2)), 
+    color-stop(87.5%, transparent), 
+    to(transparent)
+  );
+  background-image: -moz-linear-gradient(-45deg, 
+    rgba(255, 255, 255, .2) 12.5%, 
+    transparent 12.5%, 
+    transparent 25%, 
+    rgba(255, 255, 255, .2) 25%, 
+    rgba(255, 255, 255, .2) 37.5%, 
+    transparent 37.5%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 62.5%, 
+    transparent 62.5%, 
+    transparent 75%, 
+    rgba(255, 255, 255, .2) 75%, 
+    rgba(255, 255, 255, .2) 87.5%, 
+    transparent 87.5%, 
+    transparent
+  );
+  background-image: -o-linear-gradient(-45deg, 
+    rgba(255, 255, 255, .2) 12.5%, 
+    transparent 12.5%, 
+    transparent 25%, 
+    rgba(255, 255, 255, .2) 25%, 
+    rgba(255, 255, 255, .2) 37.5%, 
+    transparent 37.5%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 62.5%, 
+    transparent 62.5%, 
+    transparent 75%, 
+    rgba(255, 255, 255, .2) 75%, 
+    rgba(255, 255, 255, .2) 87.5%, 
+    transparent 87.5%, 
+    transparent
+  );
+  background-image: linear-gradient(-45deg, 
+    rgba(255, 255, 255, .2) 12.5%, 
+    transparent 12.5%, 
+    transparent 25%, 
+    rgba(255, 255, 255, .2) 25%, 
+    rgba(255, 255, 255, .2) 37.5%, 
+    transparent 37.5%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 62.5%, 
+    transparent 62.5%, 
+    transparent 75%, 
+    rgba(255, 255, 255, .2) 75%, 
+    rgba(255, 255, 255, .2) 87.5%, 
+    transparent 87.5%, 
+    transparent
+  );
+}
+.calendar-operate{
+  display: flex;
+  align-items: center;
+  height: 80rpx;
+  background-color: var(--color1);
+  padding: 0 20rpx;
+}
+.calendar-operate button{
+  margin-left: auto !important;
+}
