@@ -25,7 +25,9 @@ Page({
         '2024-12-2',
         '2024-12-3'
       ]
-    }
+    },
+    // 用户信息
+    user: JSON.parse(wx.getStorageSync('user') || '{}')
   },
   onLoad(){
     // 初始化时显示当前月份
@@ -37,6 +39,18 @@ Page({
       currentYMD:  [now.getFullYear(), now.getMonth() + 1, now.getDate()]
     })
     this.createCalendar(now.getFullYear(), now.getMonth() + 1)
+  },
+  onUnload() {
+    // 获取当前页面栈
+    const pages = getCurrentPages()
+    if (pages.length > 1) {
+      // 上一个页面
+      const previousPage = pages[pages.length - 2]
+      if (previousPage?.getUserInfo) {
+        // 调用上一个页面的方法
+        previousPage.getUserInfo(this.data.user)
+      }
+    }
   },
   /**
    * @description: 创建日历
@@ -89,10 +103,10 @@ Page({
         completeMonth: `${nextYear}-${nextMonth}`  
       })
     }
-    const { currentYear, currentMonth, currentDate, currentYMD, history } = this.data
+    const { currentYMD, history } = this.data
     dates = dates.map(el => {
       // 今天
-      if (currentYMD[0] === currentYear && currentYMD[1] === currentMonth && currentYMD[2] === currentDate && el.date === currentDate) {
+      if (currentYMD.join('-') === `${el.completeMonth}-${el.date}`) {
         el.isToday = true
         el.activeDate = true
       }
@@ -104,7 +118,7 @@ Page({
       }
       return el
     })
-    // console.log(dates)
+    console.log(dates)
     this.setData({
       dates
     })
