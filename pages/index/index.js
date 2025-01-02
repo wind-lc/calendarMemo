@@ -12,22 +12,18 @@ Page({
     daysOfWeek: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], 
     // 日期
     dates: [],
-    // 历史记录
-    // history: JSON.parse(wx.getStorageSync('history') || '{}')
-    history: {
-      '2024-11': [
-        '2024-11-28',
-        '2024-11-29',
-        '2024-11-30'
-      ],
-      '2024-12': [
-        '2024-12-1',
-        '2024-12-2',
-        '2024-12-3'
-      ]
-    },
     // 用户信息
-    user: JSON.parse(wx.getStorageSync('user') || '{}')
+    user: JSON.parse(wx.getStorageSync('user') || '{}'),
+    // 选中日期
+    activeDate: null,
+    // 生理期天数索引
+    menstruationDaysNumberIndex: null,
+    // 生理期天数列表
+    menstruationDaysNumberList: [...Array(14).keys()].map(i => i + 2),
+    // 生理期周期索引
+    menstruationCycleIndex: null,
+    // 生理期周期列表
+    menstruationCycleList: [...Array(44).keys()].map(i => i + 17)
   },
   onLoad(){
     // 初始化时显示当前月份
@@ -39,6 +35,27 @@ Page({
       currentYMD:  [now.getFullYear(), now.getMonth() + 1, now.getDate()]
     })
     this.createCalendar(now.getFullYear(), now.getMonth() + 1)
+    // 如果有记录读取天数和周期
+    if(this.data.user.hasOwnProperty('menstruationDaysNumberIndex')){
+      this.setData({
+        menstruationDaysNumberIndex: this.data.user.menstruationDaysNumberIndex
+      })
+    }else{
+      this.setData({
+        menstruationDaysNumberIndex: 5
+      })
+      this.setUserStorage({ menstruationDaysNumberIndex: 5 })
+    }
+    if(this.data.user.hasOwnProperty('menstruationCycleIndex')){
+      this.setData({
+        menstruationCycleIndex: this.data.user.menstruationCycleIndex
+      })
+    }else{
+      this.setData({
+        menstruationCycleIndex: 11
+      })
+      this.setUserStorage({ menstruationCycleIndex: 11 })
+    }
   },
   onUnload() {
     // 获取当前页面栈
@@ -46,9 +63,9 @@ Page({
     if (pages.length > 1) {
       // 上一个页面
       const previousPage = pages[pages.length - 2]
-      if (previousPage?.getUserInfo) {
+      if (previousPage?.getUser) {
         // 调用上一个页面的方法
-        previousPage.getUserInfo(this.data.user)
+        previousPage.getUser(this.data.user)
       }
     }
   },
@@ -103,19 +120,23 @@ Page({
         completeMonth: `${nextYear}-${nextMonth}`  
       })
     }
-    const { currentYMD, history } = this.data
+    const { currentYMD } = this.data
+    const { history } = this.data.user
     dates = dates.map(el => {
       // 今天
       if (currentYMD.join('-') === `${el.completeMonth}-${el.date}`) {
         el.isToday = true
         el.activeDate = true
+        this.setData({
+          activeDate: `${el.completeMonth}-${el.date}`
+        })
       }
       // 有历史记录时显示
-      if (history.hasOwnProperty(el.completeMonth)) {
-        if(history[el.completeMonth].includes(el.completeMonth + '-' + el.date)){
-          el.isMenstruation = true
-        }
-      }
+      // if (history.includes(el.completeMonth)) {
+      //   if(history[el.completeMonth].includes(el.completeMonth + '-' + el.date)){
+      //     el.isMenstruation = true
+      //   }
+      // }
       return el
     })
     console.log(dates)
@@ -185,11 +206,58 @@ Page({
     })
   },
   /**
+   * @description: 设置用户信息存储
+   * @param {object} data 数据
+   * @return {void}
+   */
+  setUserStorage(data){
+    let user = JSON.parse(wx.getStorageSync('user') || '{}')
+    user = {
+      ...user,
+      ...data
+    }
+    wx.setStorageSync('user', JSON.stringify(user))
+  },
+  /**
    * @description: 开始经期
    * @param {event} event 点击事件
    * @return {void}
    */
   handleStartMenstruation(event){
-
+    const { dates, menstruationDaysNumberList, menstruationDaysNumberIndex } = this.data
+    let index = null
+    const list = dates.map((el, i) => {
+      if(el?.activeDate){
+        index = i
+        el.isMenstruation = true
+      }
+      if(index !== null && i > index && i < index + menstruationDaysNumberList[menstruationDaysNumberIndex]){
+        el.isMenstruation = true
+      }
+      return el
+    })
+    this.setData({
+      dates: list
+    })
+  },
+  /**
+   * @description: 更新生理期天数
+   * @param {event} event change事件
+   * @return {void}
+   */
+  updateMenstruationDaysNumber(event) {
+    const index = Number(event.detail.value)
+    this.setData({ menstruationDaysNumberIndex:  index})
+    this.setUserStorage({ menstruationDaysNumberIndex: index})
+  },
+  /**
+   * @description: 更新生理期周期
+   * @param {event} event change事件
+   * @return {void}
+   */
+  updateMenstruationCycle(event) {
+    const index = Number(event.detail.value)
+    this.setData({ menstruationCycleIndex: index })
+    this.setUserStorage({ menstruationCycleIndex: index })
   }
 })

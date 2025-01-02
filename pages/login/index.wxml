@@ -1,15 +1,17 @@
 <view class="login-wrap">
   <view class="login-title">
-    <button class="user-history btn">账号历史</button>
+    <picker bindchange="handleUserHistorySelect" value="{{index}}" range="{{userHistoryList}}">
+      <button class="user-history btn">账号历史</button>
+    </picker>
     <button class="theme-btn btn">深色/浅色</button>
   </view>
   <view class="login-content">
     <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+      <image class="avatar" src="{{user.avatarUrl}}"></image>
     </button>
     <view class="nickname-wrapper">
       <text class="nickname-label">昵称</text>
-      <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" value="{{userInfo.nickName}}" />
+      <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" value="{{user.nickName}}" />
     </view>
     <button class="login-btn" bindtap="handleLogin">确认</button>
   </view>

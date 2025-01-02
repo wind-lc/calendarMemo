@@ -25,8 +25,20 @@
         </view>
       </view>
       <view class="calendar-operate">
-        <text>记录经期</text>
-        <button class="btn">开始经期</button>
+        <text>记录生理期</text>
+        <button class="btn" bindtap="handleStartMenstruation">开始生理期</button>
+      </view>
+      <view class="calendar-operate">
+        <text>生理期天数</text>
+        <picker bindchange="updateMenstruationDaysNumber" value="{{menstruationDaysNumberIndex}}" range="{{menstruationDaysNumberList}}">
+          <button class="btn">{{menstruationDaysNumberList[menstruationDaysNumberIndex]}} 天</button>
+        </picker>
+      </view>
+      <view class="calendar-operate">
+        <text>生理期周期</text>
+        <picker bindchange="updateMenstruationCycle" value="{{menstruationCycleIndex}}" range="{{menstruationCycleList}}">
+          <button class="btn">{{menstruationCycleList[menstruationCycleIndex]}} 天</button>
+        </picker>
       </view>
     </view>
   </view>

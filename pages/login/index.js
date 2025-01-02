@@ -2,12 +2,13 @@ const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia0
 Page({
   data: {
     // 用户信息
-    userInfo: Object.keys(JSON.parse(wx.getStorageSync('user') || '{}')).length > 0 ? JSON.parse(wx.getStorageSync('user')) : {
+    user: Object.keys(JSON.parse(wx.getStorageSync('user') || '{}')).length > 0 ? JSON.parse(wx.getStorageSync('user')) : {
       avatarUrl: defaultAvatarUrl,
       nickName: '',
     },
     // 用户历史
-    userHistory: JSON.parse(wx.getStorageSync('userHistory') || '{}')
+    userHistory: JSON.parse(wx.getStorageSync('userHistory') || '{}'),
+    userHistoryList: Object.keys(JSON.parse(wx.getStorageSync('userHistory') || '{}'))
   },
   onLoad() {
     wx.setNavigationBarTitle({title: '日历备忘录-登录'})
@@ -25,16 +26,11 @@ Page({
    * @return {void}
    */ 
   handleLogin(event){
-    if(!this.data.userHistory.hasOwnProperty(this.data.userInfo.nickName)){
-      wx.setStorageSync('user', JSON.stringify(this.data.userInfo))
-      this.data.userHistory[this.data.userInfo.nickName] = this.data.userInfo
+    if(!this.data.userHistory.hasOwnProperty(this.data.user.nickName)){
+      wx.setStorageSync('user', JSON.stringify(this.data.user))
+      this.data.userHistory[this.data.user.nickName] = this.data.user
       wx.setStorageSync('userHistory', JSON.stringify(this.data.userHistory))
     }
-    wx.showToast({
-      title: '登录成功！',
-      icon: 'success',
-      duration: 1500
-    })
     wx.navigateTo({
       url: '/pages/index/index'
     })
@@ -47,7 +43,7 @@ Page({
   onChooseAvatar(event) {
     const { avatarUrl } = event.detail
     this.setData({
-      "userInfo.avatarUrl": avatarUrl
+      "user.avatarUrl": avatarUrl
     })
   },
   /**
@@ -58,7 +54,7 @@ Page({
   onInputChange(event) {
     const nickName = event.detail.value
     this.setData({
-      'userInfo.nickName': nickName
+      'user.nickName': nickName
     })
   },
   /**
@@ -66,13 +62,26 @@ Page({
    * @param {object} user 用户信息
    * @return {void}
    */ 
-  getUserInfo(user){
+  getUser(user){
     const { avatarUrl, nickName } = JSON.parse(wx.getStorageSync('user') || '{}')
     console.log(avatarUrl, nickName)
     this.setData({
-      'userInfo.avatarUrl': avatarUrl,
-      'userInfo.nickName': nickName
+      'user.avatarUrl': avatarUrl,
+      'user.nickName': nickName,
+      userHistory: JSON.parse(wx.getStorageSync('userHistory') || '{}'),
+      userHistoryList: Object.keys(JSON.parse(wx.getStorageSync('userHistory') || '{}'))
     })
-    console.log(this.data.userInfo)
+  },
+  /**
+   * @description: 用户历史选择
+   * @param {event} event change事件
+   * @return {void}
+   */
+  handleUserHistorySelect(event) {
+    const { avatarUrl,nickName } = this.data.userHistory[this.data.userHistoryList[event.detail.value]]
+    this.setData({
+      'user.avatarUrl': avatarUrl,
+      'user.nickName': nickName
+    })
   }
 })

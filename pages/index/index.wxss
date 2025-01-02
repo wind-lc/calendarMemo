@@ -150,7 +150,9 @@
   height: 80rpx;
   background-color: var(--color1);
   padding: 0 20rpx;
+  border-bottom: 2rpx solid var(--color2);
+  justify-content: space-between;
 }
-.calendar-operate button{
-  margin-left: auto !important;
+.calendar-operate:nth-last-of-type(1){
+  border: none;
 }
